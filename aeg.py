@@ -1,12 +1,20 @@
 import sys
+import shutil
 from input_src import vid_to_audio
 from segments import seg_detection
+from ass_support import ASSGenerator
+
 
 
 def create_ass(aggressiveness, vid_file_path):
     vid_to_audio(vid_file_path)
     segs = seg_detection(aggressiveness, "tmp_wkdir/audio.wav")
-    print(segs)
+
+    ass_gen = ASSGenerator()
+    ass_gen.create_ass_file(segs, vid_file_path)
+
+    shutil.rmtree('tmp_wkdir')
+    
 
 
 def main(args):
